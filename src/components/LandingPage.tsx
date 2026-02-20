@@ -60,10 +60,9 @@ export default function LandingPage({ onUploadComplete, setIsLoading, onKycClick
       console.log('[LandingPage] Backend data received:', data);
       onUploadComplete(data);
     } catch (err: any) {
-      console.error('[LandingPage] Upload failed:', err);
-      setError(`Connection failed: ${err.message}. Please ensure backend is running on port 8000.`);
-      // DO NOT use mock data - show error instead
-      throw err;
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+      console.error('[LandingPage] Upload failed:', err, 'API_URL:', API_URL);
+      setError(`Connection failed: ${err.message}. Tried: ${API_URL}/detect`);
     } finally {
       setUploading(false);
       setIsLoading(false);
